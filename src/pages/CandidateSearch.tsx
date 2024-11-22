@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { searchGithub, searchGithubUser } from "../api/API";
 import { User } from "../interfaces/Candidate.interface";
 import CandidateCard from "../components/CandidateCard/";
-
+import Store from '../store';
 const CandidateSearch = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-
+ const { candidates , saveCandidate } = useContext(Store);
   // Fetch users with detailed information
+  console.log({candidates});
   const getUsers = async () => {
     try {
       // Fetch a batch of users
@@ -27,6 +28,7 @@ const CandidateSearch = () => {
         console.error("No data found");
       }
     } catch (error) {
+      getUsers();
       console.error("Error fetching users:", error);
     }
   };
@@ -48,6 +50,16 @@ const CandidateSearch = () => {
     getUsers(); // Fetch initial batch of users
   }, []);
 
+  const onPlusHandler = () => {
+    saveCandidate(users[currentIndex]);
+    handleButtonClick();
+  }
+
+  const onMinusHandler = () => {
+    handleButtonClick();
+  }
+
+  
   return (
     <div className="app">
       <header className="header">
@@ -65,8 +77,8 @@ const CandidateSearch = () => {
             twitter_username={users[currentIndex]?.twitter_username}
             blog={users[currentIndex]?.blog}
             bio={users[currentIndex]?.bio}
-            onPlusClick={handleButtonClick}
-            onMinusClick={handleButtonClick}
+            onPlusClick={onPlusHandler}
+            onMinusClick={onMinusHandler}
           />
         ) : (
           <p>Loading users...</p>

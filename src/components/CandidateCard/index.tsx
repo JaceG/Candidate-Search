@@ -29,7 +29,7 @@ interface CandidateCardProps {
     onMinusClick,
   }) => {
   return (
-    <div className="card-image-container">
+    <div className="card-image-container translate-y-twenty-percent-reverse">
     
       <img src={avatarUrl} alt={ username ? `${username}'s avatar` : ""} className="avatar" />
         <div className="card-container">

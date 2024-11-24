@@ -8,47 +8,47 @@ const CandidateTable  = ({ candidates, onRejectClicked }:CandidateTableProps) =>
     return(
     <table className="candidates-table">
     <tr>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Location</th>
-        <th>Email</th>
-        <th>Company</th>
-        <th>X</th>
-        <th>Website</th>
-        <th>Bio</th>
-        <th>Reject</th>
+        <th className="table-column table-column-company">Image</th>
+        <th className="table-column table-column-company">Name</th>
+        <th className="table-column table-column-company">Username</th>
+        <th className="table-column table-column-company">Location</th>
+        <th className="table-column table-column-company">Email</th>
+        <th className="table-column table-column-company">Company</th>
+        <th className="table-column table-column-bio">X</th>
+        <th className="table-column table-column-bio">Website</th>
+        <th className="table-column table-column-bio">Bio</th>
+        <th className="table-column">Reject</th>
     </tr>
       {candidates?.map((candidate: User) => {
         return (
           <tr>
-            <td>
-              <img src={candidate.avatar_url}/>
+            <td className="table-column-company">
+              <img alt="avatar" className="table-image" src={candidate.avatar_url}/>
             </td>
-            <td>{candidate.name || "N/A"}</td>
-            <td>{candidate.login || "N/A"}</td>
-            <td>{candidate.location || "N/A"}</td>
-            <td>{
+            <td className="table-column-company">{candidate.name || "N/A"}</td>
+            <td className="table-column-company">{candidate.login || "N/A"}</td>
+            <td className="table-column-company">{candidate.location || "N/A"}</td>
+            <td className="table-column-company">{
               candidate.email ? 
               <a href={'mailto:'+candidate.email}>{candidate.email}</a>
               : "N/A"      
               }
             </td>
-            <td>{candidate.company || "N/A"}</td>
-            <td> {
+            <td className="table-column-company">{candidate.company || "N/A"}</td>
+            <td className="table-column-bio"> {
                   candidate.twitter_username ? 
                   <a href={`https://x.com/${candidate.twitter_username}`} target="_blank" rel="noopener noreferrer">{candidate.twitter_username}</a>
                   : " N/A"
                 }
             </td>
-            <td>
+            <td className="table-column-bio">
             {
               candidate.blog ? 
               <a href={`${candidate.blog}` } target="_blank" rel="noopener noreferrer">{candidate.blog}</a>
               : " N/A"
             }
             </td>
-            <td>{candidate.bio || "N/A"}</td>
+            <td className="table-column-bio">{candidate.bio || "N/A"}</td>
             <td>
         <button className="btn btn-danger"
         onClick={() => onRejectClicked(candidate)}

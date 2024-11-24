@@ -151,3 +151,26 @@ tbody tr:nth-child(odd) {
     background-color: #f9f9f9;
   }
 }
+
+.translate-y-twenty-percent-reverse {
+  transform: translateY(-20%);
+}
+
+.table-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.table-column {
+  max-width: 30px;
+}
+
+
+.table-column-bio {
+  max-width: 150px;
+}
+
+
+.table-column-company {
+  max-width: 100px;
+}

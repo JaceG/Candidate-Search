@@ -19,6 +19,13 @@ const CandidateTable  = ({ candidates, onRejectClicked }:CandidateTableProps) =>
         <th className="table-column table-column-bio">Bio</th>
         <th className="table-column">Reject</th>
     </tr>
+    {
+      !candidates?.length  ? 
+      <tr className='no-data-row'>
+        <td colSpan={10}> No candidates selected.</td>
+      </tr>
+      : null
+    }
       {candidates?.map((candidate: User) => {
         return (
           <tr>

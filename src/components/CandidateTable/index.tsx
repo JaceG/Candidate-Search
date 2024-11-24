@@ -16,9 +16,6 @@ const CandidateTable  = ({ candidates, onRejectClicked }:CandidateTableProps) =>
         <th>Bio</th>
         <th>Reject</th>
     </tr>
-    
-           
-     
       {candidates?.map((candidate: User) => {
         return (
           <tr>

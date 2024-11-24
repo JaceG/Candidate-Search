@@ -1,5 +1,5 @@
 import  { useContext }  from 'react';
-import CandidateTable from "../components/CandidateTable/Index";
+import CandidateTable from "../components/CandidateTable/";
 import Store from '../store';
 import { User } from '../interfaces/Candidate.interface';
 const SavedCandidates = () => {

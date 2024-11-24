@@ -3,28 +3,33 @@ import { searchGithub, searchGithubUser } from "../api/API";
 import { User } from "../interfaces/Candidate.interface";
 import CandidateCard from "../components/CandidateCard/";
 import Store from '../store';
+
 const CandidateSearch = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
- const { candidates , saveCandidate } = useContext(Store);
-  // Fetch users with detailed information
+  const { candidates, saveCandidate } = useContext(Store);
+  const [loadingError, setLoadingError] = useState<boolean>(false);
+
   console.log({candidates});
+
   const getUsers = async () => {
     try {
-      // Fetch a batch of users
       const data = await searchGithub();
       if (data?.length > 0) {
-        // Fetch detailed user information for each user asynchronously
-        const detailedUsers: User[] = [];
+        setLoadingError(false);
+        const searchUsers = [];
         for (const user of data) {
-          const detailedUser = await searchGithubUser(user.login);
-          if (detailedUser) {
-            detailedUsers.push(detailedUser);
-          }
+          searchUsers.push(searchGithubUser(user.login));
         }
-        setUsers(detailedUsers); // Update the state with detailed users
-        setCurrentIndex(0); // Reset to the first user
+        const usersData = (await Promise.all(searchUsers)).filter((user) => user);
+        if(!usersData.length) {
+          getUsers();
+          return;
+        }
+        setUsers([...users, ...usersData]);
       } else {
+        setUsers([]);
+        setLoadingError(true);
         console.error("No data found");
       }
     } catch (error) {
@@ -33,21 +38,17 @@ const CandidateSearch = () => {
     }
   };
 
-  // Handle button clicks for both "+" and "-" buttons
   const handleButtonClick = async () => {
-    // If no users are available, fetch a new batch of users
-    if (users.length === 1) {
-      await getUsers(); // Fetch new users
-    } else {
-      // Randomly select a user from the list
-      const randomIndex = Math.floor(Math.random() * users.length);
-      setCurrentIndex(randomIndex);
-    }
+    if (currentIndex > ((users.length / 2) - 1)) {
+      await getUsers();
+    } 
+    setCurrentIndex((prev) => {
+      return prev + 1;
+    });
   };
 
-  // Fetch users on component load
   useEffect(() => {
-    getUsers(); // Fetch initial batch of users
+    getUsers();
   }, []);
 
   const onPlusHandler = () => {
@@ -59,7 +60,10 @@ const CandidateSearch = () => {
     handleButtonClick();
   }
 
-  
+  let errorMessage = "Loading users...";
+  if(loadingError) {
+    errorMessage = "Technical error. Please retry after some time."; 
+  }
   return (
     <div className="app">
       <header className="header">
@@ -81,7 +85,7 @@ const CandidateSearch = () => {
             onMinusClick={onMinusHandler}
           />
         ) : (
-          <p>Loading users...</p>
+        <p>{errorMessage}</p>
         )}
       </main>
     </div>

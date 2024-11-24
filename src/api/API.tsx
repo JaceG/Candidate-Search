@@ -1,10 +1,9 @@
 const searchGithub = async () => {
   try {
-    // Use the 'since' parameter to fetch a random starting point
     const start = Math.floor(Math.random() * 100000000) + 1;
     // console.log(import.meta.env);
     const response = await fetch(
-      `https://api.github.com/users?since=${start}&per_page=1`, {
+      `https://api.github.com/users?since=${start}&per_page=10`, {
       headers: {
         Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
       },
@@ -15,7 +14,6 @@ const searchGithub = async () => {
       throw new Error("Invalid API response, check the network tab");
     }
 
-    // Shuffle the fetched users to make it random
     const shuffledData = data.sort(() => Math.random() - 0.5);
     return shuffledData;
   } catch (err) {

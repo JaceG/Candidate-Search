@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "preinstall": "npm install --save-dev @types/react @types/react-dom @types/react-router-dom",
+    "clean": "rm -rf node_modules dist && npm cache clean --force",
+    "prebuild": "npm install @types/react @types/react-dom @types/react-router-dom",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc -p tsconfig.build.json && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

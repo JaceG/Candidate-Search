@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "skipLibCheck": true,
     "module": "ESNext",
@@ -15,9 +14,7 @@
     "isolatedModules": true,
     "declaration": true,
     "outDir": "./dist",
-    "composite": true,
-    "noEmit": false,
-    "emitDeclarationOnly": true
+    "composite": true
   },
   "include": ["src", "vite.config.ts"]
 }

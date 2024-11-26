@@ -32,5 +32,5 @@ Credits: This project was created as part of a coding bootcamp challenge. - Sour
 
 ## Preview
 
-![Portfolio 1](./assets/Screenshot-1.png)
-![Portfolio 2](./assets/Screenshot-2.png)
+![Portfolio 1](./Assets/Screenshot-1.png)
+![Portfolio 2](./Assets/Screenshot-2.png)
